@@ -262,8 +262,8 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Chip In"/>
                                 <connections>
-                                    <action selector="saveDidTapped:" destination="dKj-Ph-iXY" eventType="touchUpInside" id="zEX-Xb-WOq"/>
-                                    <segue destination="jZU-Ue-kaC" kind="show" id="DhW-B8-onM"/>
+                                    <action selector="chipInDidTapped:" destination="dKj-Ph-iXY" eventType="touchUpInside" id="QSV-7d-912"/>
+                                    <segue destination="jZU-Ue-kaC" kind="show" identifier="chipInSegue" id="DhW-B8-onM"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="20" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7wH-Jh-hps">
@@ -281,10 +281,10 @@
                     <connections>
                         <outlet property="amountCollectedTitle" destination="QKF-cj-Uqm" id="ARe-gj-jjs"/>
                         <outlet property="amountCollectedValue" destination="7wH-Jh-hps" id="gv2-wQ-iJN"/>
+                        <outlet property="chipInButton" destination="1v6-jv-BW3" id="dA6-9l-W96"/>
                         <outlet property="logTitle" destination="phU-5G-Y88" id="gwM-MV-zaY"/>
                         <outlet property="logValue" destination="g11-Su-8np" id="6lQ-Ir-li0"/>
                         <outlet property="roomTitle" destination="acv-EC-9vU" id="2wS-Yj-CMw"/>
-                        <outlet property="saveButton" destination="1v6-jv-BW3" id="OdE-0O-VLT"/>
                         <outlet property="shareButton" destination="uVs-w8-ycI" id="eIW-Fc-HwI"/>
                         <outlet property="totalAmountTitle" destination="Znq-r1-YKw" id="Qcw-2x-NBg"/>
                         <outlet property="totalAmountValue" destination="moj-L1-c1V" id="cg4-6I-4G6"/>
@@ -299,7 +299,7 @@
             <objects>
                 <viewController id="jZU-Ue-kaC" customClass="ChipInViewController" customModule="GoDutchApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0Gu-NF-tie">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="&quot;Room Name&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Btc-pF-ft9">
@@ -389,7 +389,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GJQ-Vg-emn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4690" y="396"/>
+            <point key="canvasLocation" x="4654" y="439"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="y2g-sB-7B9">
@@ -412,7 +412,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="thl-HF-phY"/>
+        <segue reference="2Yq-QS-3TG"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">

@@ -4,12 +4,13 @@
 //
 //  Created by Mark on 11/24/21.
 //
-
 import Foundation
 import UIKit
 import Firebase
 
 class ChipInViewController: UIViewController, UITextFieldDelegate{
+    
+    var roomDoucmentChipIn: String!
     
     @IBOutlet weak var titleButton: UILabel!
     @IBOutlet weak var totalAmountTitle: UILabel!
@@ -56,7 +57,7 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
         //+++++++FIREBASE TOTAL AMOUNT DATA ONCE+++++++
         //https://firebase.google.com/docs/firestore/query-data/get-data
         //title informaiton
-        let titleRef = Firestore.firestore().collection("rooms").document("yxNcGMeCRFxFE53qMI0H") //document(ref!.documentID)
+        let titleRef = Firestore.firestore().collection("rooms").document(roomDoucmentChipIn)//roomDoucmentChipIn //document(ref!.documentID)
         titleRef.getDocument(source: .cache){ (document, error) in
             if let document = document{
             let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
@@ -71,7 +72,7 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
         }
         
         //amount informaiton
-        let amountRef = Firestore.firestore().collection("rooms").document("yxNcGMeCRFxFE53qMI0H") //document(ref!.documentID)
+        let amountRef = Firestore.firestore().collection("rooms").document(roomDoucmentChipIn) //document(ref!.documentID)
         amountRef.getDocument(source: .cache){ (document, error) in
             if let document = document{
             let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
@@ -86,7 +87,7 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
         }
         
         //collected information
-        let collectedRef = Firestore.firestore().collection("rooms").document("yxNcGMeCRFxFE53qMI0H") //document(ref!.documentID)
+        let collectedRef = Firestore.firestore().collection("rooms").document(roomDoucmentChipIn) //document(ref!.documentID)
         collectedRef.getDocument(source: .cache){ (document, error) in
             if let document = document{
             let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
@@ -116,7 +117,7 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
         
         if(amount != ""){
             //add new amount to amount collected
-            let newData = Firestore.firestore().collection("rooms").document("yxNcGMeCRFxFE53qMI0H")
+            let newData = Firestore.firestore().collection("rooms").document(roomDoucmentChipIn)
             //+++++Connecting to firebase+++++
             newData.getDocument(source: .cache){ (document, error) in
                 if let document = document{
@@ -128,7 +129,6 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
                     //amountHere -> Int + amount -> back to string!
                     let a:Double? = Double(amountHere) // firstText is UITextField
                     let b:Double? = Double(amount) // secondText is UITextField
-
                         // check a and b before unwrapping using !
                         
                     var newTotal = a! + b!
@@ -154,7 +154,7 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
 //        //firebase info to update the amount needed here
 //        //pull the data and then take just the collection amount
 //        //from there send it as a string to the saveAction funciton
-//        Firestore.firestore().collection("rooms").document("yxNcGMeCRFxFE53qMI0H")
+//        Firestore.firestore().collection("rooms").document(roomDoucmentChipIn)
 //            .addSnapshotListener { documentSnapshot, error in guard let document = documentSnapshot else{
 //                print("Error fetching document: \(error!)")
 //                        return
@@ -174,4 +174,3 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
 //        return dataIntString
 //    }
 }
-        

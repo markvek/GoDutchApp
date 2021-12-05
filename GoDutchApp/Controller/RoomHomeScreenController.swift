@@ -14,7 +14,7 @@ class RoomHomeScreenController: UIViewController{
     
     //this is the name of the var that is pulled from another screen
     var roomDoucmentId: String!
-    
+
     @IBOutlet weak var roomTitle: UILabel!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var totalAmountTitle: UILabel!
@@ -23,13 +23,22 @@ class RoomHomeScreenController: UIViewController{
     @IBOutlet weak var amountCollectedValue: UILabel!
     @IBOutlet weak var logTitle: UILabel!
     @IBOutlet weak var logValue: UILabel!
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var chipInButton: UIButton!
     
     
     @IBAction func shareDidTapped(_ sender: Any) {
     }
     
-    @IBAction func saveDidTapped(_ sender: Any) {
+    @IBAction func chipInDidTapped(_ sender: UIButton) {
+        //chipInDidTapped
+        self.performSegue(withIdentifier: "chipInSegue", sender: roomDoucmentId)
+    }
+    
+    //prepare for segue here
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? ChipInViewController, let roomDoucmentId = sender as? String{
+            vc.roomDoucmentChipIn = roomDoucmentId
+        }
     }
     
     override func viewDidLoad() {
