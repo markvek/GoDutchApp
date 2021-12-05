@@ -13,9 +13,9 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
     
     @IBOutlet weak var titleButton: UILabel!
     @IBOutlet weak var totalAmountTitle: UILabel!
-    @IBOutlet weak var totalAmountValue: UILabel!
+    @IBOutlet weak var totalAmountValue: UILabel! //total amount
     @IBOutlet weak var amountCollectedTitle: UILabel!
-    @IBOutlet weak var amountCollectedValue: UILabel!
+    @IBOutlet weak var amountCollectedValue: UILabel! //amount collected
     @IBOutlet weak var chipInTitle: UILabel!
     @IBOutlet weak var tempText: UILabel!
     @IBOutlet weak var saveButton: UIButton!
@@ -23,7 +23,7 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
     
     override func viewDidLoad(){
         self.amountText.delegate = self
-        
+        loadTotalData()
         //dismiss keyboard if you tap on background
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -48,6 +48,59 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
         view.endEditing(true)
     }
     //========No more Keyboard======
+    
+    
+    //========Firebase Load Data here ======
+    func loadTotalData(){
+//        let dataDescription = "01"
+        //+++++++FIREBASE TOTAL AMOUNT DATA ONCE+++++++
+        //https://firebase.google.com/docs/firestore/query-data/get-data
+        //title informaiton
+        let titleRef = Firestore.firestore().collection("rooms").document("yxNcGMeCRFxFE53qMI0H") //document(ref!.documentID)
+        titleRef.getDocument(source: .cache){ (document, error) in
+            if let document = document{
+            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+            print("Cached document data: \(dataDescription)")
+                //making sure to translate the data into just showing one part
+                let roomDictionary = document.data()
+                let room = roomDictionary!["Room"] as! String
+                self.titleButton.text = ("\(room)")
+          } else {
+            print("Document does not exist in cache")
+          }
+        }
+        
+        //amount informaiton
+        let amountRef = Firestore.firestore().collection("rooms").document("yxNcGMeCRFxFE53qMI0H") //document(ref!.documentID)
+        amountRef.getDocument(source: .cache){ (document, error) in
+            if let document = document{
+            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+            print("Cached document data: \(dataDescription)")
+                //making sure to translate the data into just showing one part
+                let roomDictionary = document.data()
+                let amountHere = roomDictionary!["Amount"] as! String
+                self.totalAmountValue.text = ("\(amountHere)")
+          } else {
+            print("Document does not exist in cache")
+          }
+        }
+        
+        //collected information
+        let collectedRef = Firestore.firestore().collection("rooms").document("yxNcGMeCRFxFE53qMI0H") //document(ref!.documentID)
+        collectedRef.getDocument(source: .cache){ (document, error) in
+            if let document = document{
+            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+            print("Cached document data: \(dataDescription)")
+                //making sure to translate the data into just showing one part
+                let roomDictionary = document.data()
+                let amountHere = roomDictionary!["Amount"] as! String
+                self.amountCollectedValue.text = ("\(amountHere)")
+          } else {
+            print("Document does not exist in cache")
+          }
+        }
+    }
+    //========Firebase Load Data here ======
     
     //========save button tapped========
     @IBAction func saveDidTapped(_ sender: UIButton) {
