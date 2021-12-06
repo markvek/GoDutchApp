@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xFd-Pp-LkH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
@@ -38,6 +38,7 @@
                                 <buttonConfiguration key="configuration" style="gray" title="Sign Up"/>
                                 <connections>
                                     <action selector="signUpDidTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cBI-xw-Lhz"/>
+                                    <segue destination="xFd-Pp-LkH" kind="show" identifier="signUpSegue" id="21n-ib-Bgi"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -48,7 +49,6 @@
                     <connections>
                         <outlet property="emailTextField" destination="ojb-qc-kvb" id="GPJ-mW-wLh"/>
                         <outlet property="passwordTextField" destination="CoZ-Bj-jYU" id="3PS-P9-qa7"/>
-                        <segue destination="xFd-Pp-LkH" kind="presentation" identifier="signUpSegue" id="Uwt-1A-Bs3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -58,9 +58,9 @@
         <!--Home Page Controller-->
         <scene sceneID="j8Q-vc-H1U">
             <objects>
-                <viewController storyboardIdentifier="HomePageController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9sa-wW-a8V" customClass="HomePageController" customModule="GoDutchApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomePageController" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9sa-wW-a8V" customClass="HomePageController" customModule="GoDutchApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aQk-Nb-CpW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zde-7L-VRh">
@@ -80,7 +80,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="TXO-U4-ATd">
-                                <rect key="frame" x="0.0" y="267" width="414" height="629"/>
+                                <rect key="frame" x="0.0" y="267" width="414" height="575"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
@@ -123,7 +123,7 @@
         <!--Table View Controller-->
         <scene sceneID="AxY-e8-rSi">
             <objects>
-                <tableViewController id="yKR-uL-DJS" customClass="TableViewController" customModule="GoDutchApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalPresentationStyle="fullScreen" id="yKR-uL-DJS" customClass="TableViewController" customModule="GoDutchApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="lcp-8b-DGl" customClass="TableView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -138,22 +138,19 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="yKR-uL-DJS" id="0Yp-cL-yCi"/>
-                            <outlet property="delegate" destination="yKR-uL-DJS" id="z7S-do-zKa"/>
-                        </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="gey-4r-HrL"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D7B-1a-Tj9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2761" y="-677"/>
+            <point key="canvasLocation" x="2761" y="-640"/>
         </scene>
         <!--Create New Room-->
         <scene sceneID="xUY-31-qd7">
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="4Ry-bt-Kly" customClass="CreateNewRoom" customModule="GoDutchApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uoi-b8-yZf">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Room Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2AM-eG-hDq">
@@ -195,14 +192,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wCF-ip-gEe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3634.7826086956525" y="-295.3125"/>
+            <point key="canvasLocation" x="3741" y="-330"/>
         </scene>
         <!--Room Home Screen Controller-->
         <scene sceneID="HgK-gd-d3d">
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="dKj-Ph-iXY" customClass="RoomHomeScreenController" customModule="GoDutchApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OA9-nj-bED">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uVs-w8-ycI">
@@ -299,7 +296,7 @@
             <objects>
                 <viewController id="jZU-Ue-kaC" customClass="ChipInViewController" customModule="GoDutchApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0Gu-NF-tie">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="&quot;Room Name&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Btc-pF-ft9">
@@ -408,7 +405,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IVL-op-Zz3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1939.1304347826087" y="83.705357142857139"/>
+            <point key="canvasLocation" x="2000" y="84"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="DsA-iU-9vK">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="c2e-9n-OPP" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Ly5-7a-u3Y"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="wFy-xY-f3U">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="yKR-uL-DJS" kind="relationship" relationship="rootViewController" id="gqv-Si-7PX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b1H-i3-NdT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2001" y="-640"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

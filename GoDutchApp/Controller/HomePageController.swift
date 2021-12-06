@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Firebase
+import GoogleSignIn
 
 class HomePageController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -27,29 +28,44 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
         self.roomList.reloadData()
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-            return 1
-        }
+    //GOOGLE Sign In
+    
+    GIDSignIn.sharedInstance.signIn(
+        with: signInConfig,
+        presenting: self
+    ) { user, error in
+        guard error == nil else { return }
+        guard let user = user else { return }
+
+        // Your user is signed in!
+    }
+    
+    //End GOOGLE Sign In
     
     //=======table view kahoot======
-    //sets the number of rows
+    //view will apear informaiton here
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
     
-    //sets the information in the table view - this is where firebase will come in handy
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //1. get the data via firebase or a static data set first
         
-//        let room =
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "MainCell")!
-//        cell.textLabel?.text = room.room
-//        cell.detailTextLabel?.text = room.amount
-        let cell = roomList.dequeueReusableCell(withIdentifier: "Test", for: indexPath)
+        //2. configure cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MainCell")!
         cell.textLabel?.text = "Room Name"
-        cell.detailTextLabel?.text = "$ Amount"
-        
+        cell.detailTextLabel?.text = "Amount"
+        //3. return cell
         return cell
     }
+
+    //=======table view kahoot======
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

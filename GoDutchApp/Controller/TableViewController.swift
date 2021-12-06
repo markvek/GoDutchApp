@@ -9,7 +9,20 @@ import Foundation
 import UIKit
 import Firebase
 
+//class cellPreviewTableView{
+//
+//    let room: String
+//    let amount: String
+//
+//    init(room: String, amount: String){
+//        self.room = room
+//        self.amount = amount
+//    }
+//}
+
 class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+//    @IBOutlet weak var tableView: UITableViewCell!
     
     //view will apear informaiton here
     override func viewWillAppear(_ animated: Bool){
@@ -20,24 +33,22 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-            return 1
-        }
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            
-    //        let room =
-            let cell = tableView.dequeueReusableCell(withIdentifier: "MainCell")!
-    //        cell.textLabel?.text = room.room
-    //        cell.detailTextLabel?.text = room.amount
-//            let cell = dequeueReusableCell(withIdentifier: "Test", for: indexPath)
-            cell.textLabel?.text = "Room Name"
-            cell.detailTextLabel?.text = "$ Amount"
-//
-            return cell
+        //1. get the data via firebase or a static data set first
+        
+        //2. configure cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MainCell")!
+        cell.textLabel?.text = "Room Name"
+        cell.detailTextLabel?.text = "Amount"
+        //3. return cell
+        return cell
     }
     
     
