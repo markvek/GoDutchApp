@@ -15,8 +15,8 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var rooms = [room]()
     
-    @IBOutlet weak var createNewRoom: UIButton!
-    @IBOutlet weak var goToRoom: UIButton!
+    @IBOutlet weak var addRoom: UIBarButtonItem!
+    @IBOutlet weak var signOutButton: UIBarButtonItem!
     @IBOutlet weak var roomList: UITableView!
     
     
@@ -27,6 +27,17 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
         self.roomList.reloadData()
     }
     
+    //===preping data for tableview===
+    func appendData(){
+        //let ref = Firestore.firestore().collection("rooms").document(ref!.documentID)
+//        for i in room{
+//            //append code
+//            getDocuments(source: Firestore.firestore().collection("rooms"), completion: nil)
+//        }
+    }
+    
+    
+    //===data for tableview is preped===
     
     
     //=======table view kahoot======
@@ -45,17 +56,17 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
         
 //        init(style: .subtitle ,reuseIdentifier: nil)
         //2. configure cell
-        let cell = roomList.dequeueReusableCell(withIdentifier: "MainCell")!
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: nil)
+//        let cell = roomList.dequeueReusableCell(withIdentifier: "MainCell")!
 //        UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-        cell.textLabel?.text = "Room Name"
-        cell.detailTextLabel?.text = "Amount"
+        cell.textLabel?.text = "Room Name" //room.room//"Room Name"
+        cell.detailTextLabel?.text = "Account" //room.amount //"Amount"
         
         print("CELL: ")
         print(cell)
         //3. return cell
         return cell
     }
-
 
     //=======table view kahoot end ======
 
@@ -73,23 +84,29 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
                 let roomName = roomDictionary["Room"] as! String
                 let roomAmount = roomDictionary["Amount"] as! String
                 let roomAmountCollected = roomDictionary["Amount Collected"] as! String
+//                let roomId = roomDictionary[document]
                 
-                let room = room(amount: roomAmount, amountCollected: roomAmountCollected, room: roomName)
+                let room = room(amount: roomAmount, amountCollected: roomAmountCollected, room: roomName/*, documentId: roomId*/)
                 self.rooms.append(room)
             }
         }
         
         
     }
+ 
+    
+    @IBAction func addRoomDidTapped(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "createNewRoomNav", sender: documentTemp)
+    }
+    
+    
+    @IBAction func signOutDidTapped(_ sender: UIBarButtonItem) {
+        self.performSegue(withIdentifier: "signOutSegue", sender: documentTemp)
+    }
+    
     
     //this code here should be deleted and then replicated in the table view
-    @IBAction func openDidTapped(_ sender: Any) {
-        self.performSegue(withIdentifier: "openRoomSegue", sender: documentTemp)
-    }
     
-    @IBAction func createNewRoomDidTapped(_ sender: Any) {
-    
-    }
     
     //== this function is called after the segue is called up -- and help pass the doc id (ref!.documentID) to the next page==
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
