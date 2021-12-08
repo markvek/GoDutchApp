@@ -7,7 +7,7 @@
 
 import UIKit
 import Firebase
-//import GoogleSignIn
+import GoogleSignIn
 
 
 
@@ -28,6 +28,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //          // ...
 //        }
 //    }
+    
+    //GOOGLE Sign In
+    
+//    GIDSignIn.sharedInstance.signIn(
+//        with: signInConfig,
+//        presenting: self
+//    ) { user, error in
+//        guard error == nil else { return }
+//        guard let user = user else { return }
+//
+//        // Your user is signed in!
+//    }
+    
+    //End GOOGLE Sign In 
     
     
     override func viewDidLoad() {

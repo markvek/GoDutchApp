@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 import Firebase
-import GoogleSignIn
 
 class HomePageController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -28,19 +27,7 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
         self.roomList.reloadData()
     }
     
-    //GOOGLE Sign In
     
-    GIDSignIn.sharedInstance.signIn(
-        with: signInConfig,
-        presenting: self
-    ) { user, error in
-        guard error == nil else { return }
-        guard let user = user else { return }
-
-        // Your user is signed in!
-    }
-    
-    //End GOOGLE Sign In
     
     //=======table view kahoot======
     //view will apear informaiton here
@@ -56,15 +43,21 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //1. get the data via firebase or a static data set first
         
+//        init(style: .subtitle ,reuseIdentifier: nil)
         //2. configure cell
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MainCell")!
+        let cell = roomList.dequeueReusableCell(withIdentifier: "MainCell")!
+//        UITableViewCell(style: .subtitle, reuseIdentifier: nil)
         cell.textLabel?.text = "Room Name"
         cell.detailTextLabel?.text = "Amount"
+        
+        print("CELL: ")
+        print(cell)
         //3. return cell
         return cell
     }
 
-    //=======table view kahoot======
+
+    //=======table view kahoot end ======
 
     
     override func viewDidLoad() {
@@ -89,7 +82,7 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
-    
+    //this code here should be deleted and then replicated in the table view
     @IBAction func openDidTapped(_ sender: Any) {
         self.performSegue(withIdentifier: "openRoomSegue", sender: documentTemp)
     }
