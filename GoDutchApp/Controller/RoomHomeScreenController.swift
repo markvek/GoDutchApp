@@ -11,13 +11,16 @@ import UIKit
 import MessageUI
 import Firebase
 
-class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate/*, MFMessageComposeViewControllerDelegate*/{
+class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate{
     
-    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController!, didFinishWith result: MessageComposeResult) {
+        //Displaying the message screen with animation.
+        self.dismiss(animated: true, completion: nil)
+    }
     
     
     //this is the name of the var that is pulled from another screen
-    var roomDoucmentId: String!
+    var roomData: room!
 
     //image picker info
     let imagePicker = UIImagePickerController()
@@ -30,7 +33,32 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var chipInButton: UIButton!
     @IBOutlet weak var phoneNumber: UITextField!
     @IBOutlet weak var sendTextButton: UIButton!
+    @IBOutlet weak var roomImage: UIImageView!
+    @IBOutlet weak var selectImageButton: UIButton!
     
+    //=====Imagination Image Creation======
+    
+    @IBAction func selectImageDidTappee(_ sender: UIButton) {
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        let originalImage = info[.originalImage] as! UIImage
+        roomImage.image = originalImage
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    //=====Imagination Image Creation======
     
     //=======SENDING TEXT MESSAGE========
     //tutorial 1. https://www.youtube.com/watch?v=cWttLcDJfLk
@@ -40,21 +68,8 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
         sendTextAction()
     }
     
-//    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-//        <#code#>
-//    }
-    
-//    func messageComposeViewController(didFinishWithResult result: MessageComposeResult) {
-            //... handle sms screen actions
-        //dismissViewControllerAnimated
-//        self.dismissViewControllerAnimated(true, completion: nil)
-//    }
-//
-//    override func viewWillDisappear(animated: Bool) {
-//            self.navigationController?.navigationBarHidden = false
-//    }
-    
-    @objc func sendTextAction(){
+
+    func sendTextAction(){
         if MFMessageComposeViewController.canSendText(){
             let controller = MFMessageComposeViewController()
             controller.body = "Firebase Info"
@@ -63,7 +78,27 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
         
         //=== FETCHING SOME FIREBASE SNACKS ==
 //
+        
+        
         var messageText = "rename me"
+        
+        messageText = "The room '\(roomData.room)' you are in needs to collect $\(roomData.amount). You have already collected $\(roomData.amountCollected)"
+        
+        
+        if (MFMessageComposeViewController.canSendText()) {
+            let controller = MFMessageComposeViewController()
+            controller.body = messageText
+            let phoneNum = (phoneNumber.text != nil) ? phoneNumber.text! : ""
+            controller.recipients = [phoneNum] //Here goes whom you wants to send the message
+            controller.messageComposeDelegate = self
+            self.present(controller, animated: true, completion: nil)
+        }
+        //This is just for testing purpose as when you run in the simulator, you cannot send the message.
+        else{
+            print("Cannot send the message")
+        }
+
+        /*
         let roomRef = Firestore.firestore().collection("rooms").document(roomDoucmentId) //document(ref!.documentID)
         roomRef.getDocument(source: .cache){ (document, error) in
             if let document = document{
@@ -92,7 +127,7 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
           } else {
             print("Document does not exist in cache")
           }
-        }
+        }*/
         
             
             
@@ -114,57 +149,19 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
         view.endEditing(true)
     }
     
-    
-    
     //=======Keybaord Kahoot End =========
-    
-    func imagegPickerSet(){
-        //Image Picker Busienss
-//        imagePicker.delegate = self
-//        imagePicker.allowsEditing = true
-//        imagePicker.mediaTypes = ["public.image", "public.movie"]
-//        imagePicker.sourceType = .photoLibrary
-//        //present imagePicker
-//        present(imagePicker, animated: true, completion: nil)
-    }
-    // implement delegate methods
-    //
-    //check ITP324_PhotoKit.pdf
-    
-    func imagePickerController(_ picker: UIImagePickerController,
-    didFinishPickingMediaWithInfo info:
-    [UIImagePickerController.InfoKey : Any]) {
-        var newImage: UIImage
-        if let possibleImage = info[.editedImage] as? UIImage {
-            newImage = possibleImage
-        } else if let possibleImage = info[.originalImage] as? UIImage {
-            newImage = possibleImage
-        } else {
-            return
-        }
-        // do something interesting here!
-            picker.dismiss(animated: true)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker:
-        UIImagePickerController) {
-        picker.dismiss(animated: true)
-    }
-    
-    //Image Picker Business closed
-    
-    @IBAction func shareDidTapped(_ sender: Any) {
-    }
-    
+
     @IBAction func chipInDidTapped(_ sender: UIButton) {
         //chipInDidTapped
-        self.performSegue(withIdentifier: "chipInSegue", sender: roomDoucmentId)
+        print("Room ID: \(roomData)")
+        self.performSegue(withIdentifier: "chipInSegue", sender: roomData)
+
     }
     
     //prepare for segue here
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? ChipInViewController, let roomDoucmentId = sender as? String{
-            vc.roomDoucmentChipIn = roomDoucmentId
+        if let vc = segue.destination as? ChipInViewController, let roomData = sender as? room{
+            vc.roomData = roomData
         }
     }
     
@@ -186,6 +183,9 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
 //        let dataDescription = "01"
         //+++++++FIREBASE TOTAL AMOUNT DATA ONCE+++++++
         //https://firebase.google.com/docs/firestore/query-data/get-data
+        
+        self.totalAmountValue.text = ("\(roomData.amount)")
+        /*
         let roomRef = Firestore.firestore().collection("rooms").document(roomDoucmentId) //document(ref!.documentID)
         roomRef.getDocument(source: .cache){ (document, error) in
             if let document = document{
@@ -198,10 +198,13 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
           } else {
             print("Document does not exist in cache")
           }
-        }
+        }*/
         
         //+++++++FIREBASE LOAD TITLE ONCE+++++++
         //https://firebase.google.com/docs/firestore/query-data/get-data
+        
+        self.roomTitle.text = ("\(roomData.room)")
+        /*
         let roomName = Firestore.firestore().collection("rooms").document(roomDoucmentId) //document(ref!.documentID)
         roomName.getDocument(source: .cache){ (document, error) in
             if let document = document{
@@ -214,13 +217,15 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
             print("Document does not exist in cache")
           }
         }
-        
+        */
         
     }
     
     func loadCollectedData(){
         //+++++++FIREBASE LISTEN FOR DATA +++++++
         //https://firebase.google.com/docs/firestore/query-data/listen
+        self.amountCollectedValue.text = ("\(roomData.amountCollected)")
+        /*
         Firestore.firestore().collection("rooms").document(roomDoucmentId)
             .addSnapshotListener { documentSnapshot, error in guard let document = documentSnapshot else{
                 print("Error fetching document: \(error!)")
@@ -236,7 +241,7 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
                 let amountNow = roomDictionary!["Amount Collected"] as! String
                 self.amountCollectedValue.text = ("\(amountNow)")
             }
-
+            */
     }
     
     

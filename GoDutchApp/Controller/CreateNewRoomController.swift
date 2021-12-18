@@ -64,19 +64,19 @@ class CreateNewRoom: UIViewController, UITextFieldDelegate{
     @objc func saveAction(){
         
         // 1
-        let room = roomNameText.text
+        let roomName = roomNameText.text
         let amount = amountText.text
         
         // 2
         print("saveDidClicked")
         
         //3
-        if (room != "" || amount != ""){
+        if (roomName != "" || amount != ""){
             
             // 4
             var ref: DocumentReference? = nil
             ref = Firestore.firestore().collection("rooms").addDocument(data: [
-                    "Room": room!,
+                    "Room": roomName!,
                     "Amount": amount!,
                     "Amount Collected": "0"
                     //add user names here too
@@ -87,8 +87,8 @@ class CreateNewRoom: UIViewController, UITextFieldDelegate{
                     print("Error adding document: \(err)")
                 } else {
                     print("Document added with ID: \(ref!.documentID)")
-                      
-                    self.performSegue(withIdentifier: "saveSegue", sender: ref!.documentID)
+                    let roomData: room = room(amount: amount ?? "", amountCollected: "0", room: roomName ?? "Default", docId: ref!.documentID)
+                    self.performSegue(withIdentifier: "saveSegue", sender: roomData)
                 }
             }
                 
@@ -99,8 +99,8 @@ class CreateNewRoom: UIViewController, UITextFieldDelegate{
     
     //== this function is called after the segue is called up -- and help pass the doc id (ref!.documentID) to the next page==
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? RoomHomeScreenController, let documentId = sender as? String{
-            vc.roomDoucmentId = documentId
+        if let vc = segue.destination as? RoomHomeScreenController, let roomData = sender as? room{
+            vc.roomData = roomData
         }
     }
     

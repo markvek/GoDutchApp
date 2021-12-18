@@ -13,7 +13,7 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var documentTemp: String = ""
     
-    var rooms = [room]()
+    var rooms: [room] = []
     
     @IBOutlet weak var addRoom: UIBarButtonItem!
     @IBOutlet weak var signOutButton: UIBarButtonItem!
@@ -48,7 +48,7 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return self.rooms.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -59,13 +59,23 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: nil)
 //        let cell = roomList.dequeueReusableCell(withIdentifier: "MainCell")!
 //        UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-        cell.textLabel?.text = "Room Name" //room.room//"Room Name"
-        cell.detailTextLabel?.text = "Account" //room.amount //"Amount"
+        let currentRoom = rooms[indexPath.row]
+        cell.textLabel?.text = currentRoom.room //room.room//"Room Name"
+        cell.detailTextLabel?.text = currentRoom.amount //room.amount //"Amount"
         
         print("CELL: ")
         print(cell)
         //3. return cell
         return cell
+    }
+    
+    //clicking functionality
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        documentTemp = room.documentID
+        tableView.deselectRow(at: indexPath, animated: true)
+        let currentRoom = rooms[indexPath.row]
+        performSegue(withIdentifier: "tableViewSegue", sender: currentRoom)
     }
 
     //=======table view kahoot end ======
@@ -84,16 +94,18 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
                 let roomName = roomDictionary["Room"] as! String
                 let roomAmount = roomDictionary["Amount"] as! String
                 let roomAmountCollected = roomDictionary["Amount Collected"] as! String
-//                let roomId = roomDictionary[document]
+                let roomId = document.documentID
                 
-                let room = room(amount: roomAmount, amountCollected: roomAmountCollected, room: roomName/*, documentId: roomId*/)
+                
+                let room = room(amount: roomAmount, amountCollected: roomAmountCollected, room: roomName, docId: roomId)
                 self.rooms.append(room)
             }
+            self.roomList.reloadData()
         }
         
         
+        
     }
- 
     
     @IBAction func addRoomDidTapped(_ sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "createNewRoomNav", sender: documentTemp)
@@ -101,7 +113,7 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     @IBAction func signOutDidTapped(_ sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "signOutSegue", sender: documentTemp)
+        self.dismiss(animated: true, completion: nil)
     }
     
     
@@ -110,9 +122,9 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //== this function is called after the segue is called up -- and help pass the doc id (ref!.documentID) to the next page==
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        var documentTemp = "yxNcGMeCRFxFE53qMI0H"
-        if let vc = segue.destination as? RoomHomeScreenController, let documentId = sender as? String{
-            vc.roomDoucmentId = documentTemp
+
+        if let vc = segue.destination as? RoomHomeScreenController, let roomData = sender as? room{
+            vc.roomData = roomData
         }
     }
     

@@ -12,9 +12,10 @@ import GoogleSignIn
 
 
 class ViewController: UIViewController, UITextFieldDelegate {
-
+//com.googleusercontent.apps.567351449167-v50kre2tmikae3f5921cjpim0hv006p0
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var signInButton: GIDSignInButton!
     
     
     //this is to check if a user is logged in
@@ -29,21 +30,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 //        }
 //    }
     
-    //GOOGLE Sign In
-    
-//    GIDSignIn.sharedInstance.signIn(
-//        with: signInConfig,
-//        presenting: self
-//    ) { user, error in
-//        guard error == nil else { return }
-//        guard let user = user else { return }
-//
-//        // Your user is signed in!
-//    }
-    
-    //End GOOGLE Sign In 
-    
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -64,43 +51,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         //what does remove as observer mean? or do
         
         UIApplication.shared.scheduleLocalNotification(notification)
-        //+++++++++Notification  +++++++++
-        
-        
-        //+++++++++FIREBASE TUTORIAL CODE +++++++++
-//      UIApplication.shared.scheduledLocalNotifications(notification)
-//        let userCollection = Firestore.firestore().collection("users")
-
-        //WIRTE DATA TO FIREBASE
-//        let testReference = userCollection.document("test")
-        //set Data is destructive and removes all prev changes to that document (in firebase)
-        //to make sure everything is ok add paramenter: merge: true
-//        testReference.setData(["name": "test","age": 0], merge: true){ err in
-//            if let err = err{
-//                print(err.localizedDescription)
-//            }else{
-//                print("We wrote data to firebase")
-//            }
-//        }
-        
-        //ADDDOCUMENT here to put in more information
-//        Firestore.firestore().collection("users").addDocument(data: ["name" : "Test", "grade" : "A"], completion:nil)
-        //DELETE document informaiton
-//        Firestore.firestore().collection("user").document("1").delete()
-        //READ DATA ONCE
-//        Firebase.firestore().collection("users").document("test").getDocument{ snap, err in
-//            let data = snap?.data()
-//            let documentID = snap?.documentID()
-//            print("getDocument - document id \(documentID) data \(data)")
-//        }
-//        //READDATAMULTIPLETIMES
-//        Firebase.firestore().collection("users").document("test").addSnapshotListener{ snap, err in
-//            let data = snap?.data()
-//            let documentID = snap?.documentID()
-//            print("addSnapshotListener - document id \(documentID) data \(data)")
-//        }
-        //+++++++++FIREBASE TUTORIAL CODE +++++++++
-        
+        //+++++++++Notification+++++++++
         
     }
     
@@ -121,6 +72,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         case self.passwordTextField:
             //call signup button tap
             signUpAction()
+//            dismissKeyboard()
         default:
             self.emailTextField.resignFirstResponder()
         }
@@ -137,11 +89,55 @@ class ViewController: UIViewController, UITextFieldDelegate {
     //=====Keyboard Functionaluty End ======
     
     
-    //=======Sign Up Buttin Tapped ==========
+    //=======Sign Up Buttin Tapped GOOGLE SIGN UP==========
+    //https://firebase.google.com/docs/auth/ios/google-signin
+    //"com.googleusercontent.apps.567351449167-v50kre2tmikae3f5921cjpim0hv006p0"
+    //GOOGLE SIGN IN ATTEMPT 2
+    func application(_ application: UIApplication, open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey: Any])
+      -> Bool {
+      return GIDSignIn.sharedInstance.handle(url)
+    }
+    
+    
     @IBAction func signUpDidTapped(_ sender: Any) {
-        signUpAction()
-//        let email = emailTextField.text!
-//        let password = passwordTextField.text!
+//        signUpAction()
+      
+        //ATTEMPT 1 ON GETTING GOOGLE SIGN IN TO WORK
+//        let url = URL(string: "com.googleusercontent.apps.567351449167-v50kre2tmikae3f5921cjpim0hv006p0")
+        
+//        UIApplication.shared.open(url!){(result)} in
+//        if result {
+        
+            guard let clinetID = FirebaseApp.app()?.options.clientID else {return}
+
+            //create the google sign in configuation objkect
+            let config = GIDConfiguration(clientID: clinetID)
+            
+            GIDSignIn.sharedInstance.signIn(with: config, presenting: self){[unowned self] user, error in
+                if let error = error{
+                    return
+                }
+
+                guard
+                    let authentication = user?.authentication,
+                    let idToken = authentication.idToken
+                else {
+                    return
+
+                }
+
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+                performSegue(withIdentifier: "signUpSegue", sender: nil)
+//                Auth.auth().signIn(with: credential){authResult, error in
+//                    if let error = error{
+//                        print(error.localizedDescription)
+//                    }else if authResult != nil {
+//                        performSegue(withIdentifier: "signUpSegue", sender: nil)
+//                    }
+//                }
+//            }
+        }
     }
     
     @objc func signUpAction(){
@@ -167,7 +163,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             }
 //            +++++++++FIREBASE END +++++++
                 //if statnemtn here to stop code
-            performSegue(withIdentifier: "signUpSegue", sender: nil)
+            //performSegue(withIdentifier: "signUpSegue", sender: nil)
         }else{
             print("error") //
         }
