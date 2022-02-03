@@ -41,9 +41,13 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBAction func selectImageDidTappee(_ sender: UIButton) {
         
         let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .photoLibrary
+        //checks if camera is avalible to take a photo
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            imagePicker.sourceType = .camera
+        }else{
+            imagePicker.sourceType = .photoLibrary
+        }
         imagePicker.delegate = self
-        
         present(imagePicker, animated: true, completion: nil)
     }
     

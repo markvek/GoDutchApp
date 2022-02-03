@@ -59,53 +59,14 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
         //https://firebase.google.com/docs/firestore/query-data/get-data
         //title informaiton
         self.titleButton.text = (roomData.room)
-//        let titleRef = Firestore.firestore().collection("rooms").document(roomDoucmentChipIn)//roomDoucmentChipIn //document(ref!.documentID)
-//        titleRef.getDocument(source: .cache){ (document, error) in
-//            if let document = document{
-//            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-//            print("Cached document data: \(dataDescription)")
-//                //making sure to translate the data into just showing one part
-//                let roomDictionary = document.data()
-//                let room = roomDictionary!["Room"] as! String
-//                self.titleButton.text = ("\(room)")
-//          } else {
-//            print("Document does not exist in cache")
-//          }
-//        }
         
         //amount informaiton
         let amountHere = roomData.amount
         self.totalAmountValue.text = ("\(amountHere)")
-        
-//        let amountRef = Firestore.firestore().collection("rooms").document(roomDoucmentChipIn) //document(ref!.documentID)
-//        amountRef.getDocument(source: .cache){ (document, error) in
-//            if let document = document{
-//            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-//            print("Cached document data: \(dataDescription)")
-//                //making sure to translate the data into just showing one part
-//                let roomDictionary = document.data()
-//                let amountHere = roomDictionary!["Amount"] as! String
-//                self.totalAmountValue.text = ("\(amountHere)")
-//          } else {
-//            print("Document does not exist in cache")
-//          }
-//        }
+    
         
         self.amountCollectedValue.text = ("\(roomData.amountCollected)")
-        //collected information
-//        let collectedRef = Firestore.firestore().collection("rooms").document(roomDoucmentChipIn) //document(ref!.documentID)
-//        collectedRef.getDocument(source: .cache){ (document, error) in
-//            if let document = document{
-//            let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-//            print("Cached document data: \(dataDescription)")
-//                //making sure to translate the data into just showing one part
-//                let roomDictionary = document.data()
-//                let amountHere = roomDictionary!["Amount"] as! String
-//                self.amountCollectedValue.text = ("\(amountHere)")
-//          } else {
-//            print("Document does not exist in cache")
-//          }
-//        }
+
     }
     //========Firebase Load Data here ======
     

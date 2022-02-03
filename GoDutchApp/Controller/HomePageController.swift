@@ -62,6 +62,8 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
         let currentRoom = rooms[indexPath.row]
         cell.textLabel?.text = currentRoom.room //room.room//"Room Name"
         cell.detailTextLabel?.text = currentRoom.amount //room.amount //"Amount"
+//        var myImage: UIImage = GoDutch
+//        cell.imageView?.image = myImage
         
         print("CELL: ")
         print(cell)
@@ -79,7 +81,6 @@ class HomePageController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     //=======table view kahoot end ======
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
