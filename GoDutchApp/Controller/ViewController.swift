@@ -16,6 +16,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var signInButton: GIDSignInButton!
+    @IBOutlet weak var logInButton: UIButton!
     
     
     //this is to check if a user is logged in

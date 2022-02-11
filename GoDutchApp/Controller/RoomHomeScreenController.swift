@@ -11,7 +11,7 @@ import UIKit
 import MessageUI
 import Firebase
 
-class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MFMessageComposeViewControllerDelegate{
+class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MFMessageComposeViewControllerDelegate{
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController!, didFinishWith result: MessageComposeResult) {
         //Displaying the message screen with animation.
@@ -26,15 +26,34 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
     let imagePicker = UIImagePickerController()
     
     @IBOutlet weak var roomTitle: UILabel!
-    @IBOutlet weak var totalAmountTitle: UILabel!
     @IBOutlet weak var totalAmountValue: UILabel!
-    @IBOutlet weak var amountCollectedTitle: UILabel!
     @IBOutlet weak var amountCollectedValue: UILabel!
     @IBOutlet weak var chipInButton: UIButton!
-    @IBOutlet weak var phoneNumber: UITextField!
+//    @IBOutlet weak var phoneNumber: UITextField! //replace this with a proper apple share functionality
     @IBOutlet weak var sendTextButton: UIButton!
     @IBOutlet weak var roomImage: UIImageView!
     @IBOutlet weak var selectImageButton: UIButton!
+    @IBOutlet weak var paymentTableView: UITableView!
+    
+    
+    //=======Table View Kahoot=======
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: nil)
+        cell.textLabel?.text = "test"
+        return cell
+    }
+    
+    //need to add clicking functionality
+    
+    //=======Table View Kahoot End=====
     
     //=====Imagination Image Creation======
     
@@ -89,18 +108,18 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
         messageText = "The room '\(roomData.room)' you are in needs to collect $\(roomData.amount). You have already collected $\(roomData.amountCollected)"
         
         
-        if (MFMessageComposeViewController.canSendText()) {
-            let controller = MFMessageComposeViewController()
-            controller.body = messageText
-            let phoneNum = (phoneNumber.text != nil) ? phoneNumber.text! : ""
-            controller.recipients = [phoneNum] //Here goes whom you wants to send the message
-            controller.messageComposeDelegate = self
-            self.present(controller, animated: true, completion: nil)
-        }
+//        if (MFMessageComposeViewController.canSendText()) {
+//            let controller = MFMessageComposeViewController()
+//            controller.body = messageText
+////            let phoneNum = (phoneNumber.text != nil) ? phoneNumber.text! : ""
+//            controller.recipients = [phoneNum] //Here goes whom you wants to send the message
+//            controller.messageComposeDelegate = self
+//            self.present(controller, animated: true, completion: nil)
+//        }
         //This is just for testing purpose as when you run in the simulator, you cannot send the message.
-        else{
-            print("Cannot send the message")
-        }
+//        else{
+//            print("Cannot send the message")
+//        }
 
         /*
         let roomRef = Firestore.firestore().collection("rooms").document(roomDoucmentId) //document(ref!.documentID)
@@ -139,14 +158,16 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
         
     }
     
+    //    @IBAction func phoneNumberDone(_ sender: Any) {
+    //        phoneNumber.resignFirstResponder()
+    //    }
+    
     //======END SENDING TEXT MESSAGE=======
     
     //=======Keybaord Kahoot=========
     
     
-    @IBAction func phoneNumberDone(_ sender: Any) {
-        phoneNumber.resignFirstResponder()
-    }
+
     
     @objc func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
@@ -175,7 +196,7 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
         
         
         //========Additional Keybaord Kahoot ========
-        self.phoneNumber.delegate = self
+//        self.phoneNumber.delegate = self
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
