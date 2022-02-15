@@ -46,7 +46,8 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: nil)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
+//        let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: nil)
         cell.textLabel?.text = "test"
         return cell
     }
