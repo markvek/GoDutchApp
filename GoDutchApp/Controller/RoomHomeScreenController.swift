@@ -10,6 +10,7 @@ import UIKit
 //import PhotoKit
 import MessageUI
 import Firebase
+import SwiftUI
 
 class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, MFMessageComposeViewControllerDelegate{
     
@@ -35,6 +36,22 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var selectImageButton: UIButton!
     @IBOutlet weak var paymentTableView: UITableView!
     
+    override func viewDidLoad() {
+        loadTotalData()
+        loadCollectedData()
+        
+        //Table View Kahoot
+        paymentTableView.delegate = self
+        paymentTableView.dataSource = self
+        
+        //========Additional Keybaord Kahoot ========
+//        self.phoneNumber.delegate = self
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        //========Additional Keybaord Kahoot Done ========
+
+    }
     
     //=======Table View Kahoot=======
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -45,11 +62,30 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
         return 2
     }
     
+    //SECTION HEADERS DO NOT WORK
+    func tableView(in tableView: UITableView!, tableView section: Int) -> String!{
+        if (section == 0){
+            let nameOne = "Pending Payments"
+            return nameOne
+        }
+        if (section == 1){
+            let nameTwo = "Recorded Payments"
+            return nameTwo
+        }
+        return ""
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
 //        let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: nil)
         cell.textLabel?.text = "test"
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        print("Cell Selected")
+        performSegue(withIdentifier: "paymentDrilldownSegue", sender: cell)
     }
     
     //need to add clicking functionality
@@ -191,19 +227,7 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
         }
     }
     
-    override func viewDidLoad() {
-        loadTotalData()
-        loadCollectedData()
-        
-        
-        //========Additional Keybaord Kahoot ========
-//        self.phoneNumber.delegate = self
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-        view.addGestureRecognizer(tap)
-        //========Additional Keybaord Kahoot Done ========
 
-    }
     
     func loadTotalData(){
 //        let dataDescription = "01"

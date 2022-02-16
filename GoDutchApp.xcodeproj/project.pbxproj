@@ -16,6 +16,7 @@
 		F330B647274F1B8900988EAA /* HomePageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330B646274F1B8900988EAA /* HomePageController.swift */; };
 		F330B649274F1DDF00988EAA /* RoomHomeScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330B648274F1DDF00988EAA /* RoomHomeScreenController.swift */; };
 		F330B64D274F1EDD00988EAA /* ChipInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330B64C274F1EDD00988EAA /* ChipInViewController.swift */; };
+		F350DCFA27BDBF6200A2E1A3 /* PaymentDrilldownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F350DCF927BDBF6200A2E1A3 /* PaymentDrilldownViewController.swift */; };
 		F37313D42748995D00F18379 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37313D32748995D00F18379 /* AppDelegate.swift */; };
 		F37313D62748995D00F18379 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37313D52748995D00F18379 /* SceneDelegate.swift */; };
 		F37313D82748995D00F18379 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F37313D72748995D00F18379 /* ViewController.swift */; };
@@ -52,6 +53,7 @@
 		F330B646274F1B8900988EAA /* HomePageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageController.swift; sourceTree = "<group>"; };
 		F330B648274F1DDF00988EAA /* RoomHomeScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomHomeScreenController.swift; sourceTree = "<group>"; };
 		F330B64C274F1EDD00988EAA /* ChipInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipInViewController.swift; sourceTree = "<group>"; };
+		F350DCF927BDBF6200A2E1A3 /* PaymentDrilldownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentDrilldownViewController.swift; sourceTree = "<group>"; };
 		F37313D02748995D00F18379 /* GoDutchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoDutchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F37313D32748995D00F18379 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F37313D52748995D00F18379 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				F330B646274F1B8900988EAA /* HomePageController.swift */,
 				F330B648274F1DDF00988EAA /* RoomHomeScreenController.swift */,
 				F330B64C274F1EDD00988EAA /* ChipInViewController.swift */,
+				F350DCF927BDBF6200A2E1A3 /* PaymentDrilldownViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				F37313D62748995D00F18379 /* SceneDelegate.swift in Sources */,
 				F330B64D274F1EDD00988EAA /* ChipInViewController.swift in Sources */,
 				F303C4A0275871AF00E78A01 /* room.swift in Sources */,
+				F350DCFA27BDBF6200A2E1A3 /* PaymentDrilldownViewController.swift in Sources */,
 				F303C49E275052ED00E78A01 /* CreateNewRoomController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
