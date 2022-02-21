@@ -29,7 +29,7 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var roomTitle: UILabel!
     @IBOutlet weak var totalAmountValue: UILabel!
     @IBOutlet weak var amountCollectedValue: UILabel!
-    @IBOutlet weak var chipInButton: UIButton!
+    @IBOutlet weak var chipInButton: UIButton! // goes to chipInSegue
 //    @IBOutlet weak var phoneNumber: UITextField! //replace this with a proper apple share functionality
     @IBOutlet weak var sendTextButton: UIButton!
     @IBOutlet weak var roomImage: UIImageView!
@@ -53,6 +53,17 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
 
     }
     
+    //===Segue Excitemnt===
+    
+    @IBAction func chipInTapped(_ sender: Any) {
+        chipInAction()
+    }
+    
+    @objc func chipInAction(){
+        self.performSegue(withIdentifier: "chipInSegue", sender: chipInButton.self)
+    }
+    //===End of Segue Excitemnt===
+    
     //=======Table View Kahoot=======
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -72,23 +83,26 @@ class RoomHomeScreenController: UIViewController, UITextFieldDelegate, UIImagePi
             let nameTwo = "Recorded Payments"
             return nameTwo
         }
-        return ""
+        return "Test"
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-//        let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: nil)
-        cell.textLabel?.text = "test"
+        cell.textLabel?.text = "Mark is a Cowboy"
+        cell.detailTextLabel?.text = "Ori is a Spy"
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+//        let cell =
         print("Cell Selected")
-        performSegue(withIdentifier: "paymentDrilldownSegue", sender: cell)
+        performSegue(withIdentifier: "paymentDrilldownSegue", sender: paymentTableView)
+        print("Table Clicked")
     }
     
     //need to add clicking functionality
+
     
     //=======Table View Kahoot End=====
     

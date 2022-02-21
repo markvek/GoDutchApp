@@ -100,6 +100,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
       return GIDSignIn.sharedInstance.handle(url)
     }
     
+    @IBAction func logInDidTapped(_ sender: Any) {
+        performSegue(withIdentifier: "signUpSegue", sender: nil)
+    }
     
     @IBAction func signUpDidTapped(_ sender: Any) {
 //        signUpAction()

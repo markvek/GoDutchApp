@@ -22,10 +22,11 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var tempText: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var amountText: UITextField!
+    @IBOutlet weak var paymentConfirmation: UISwitch!
     
     override func viewDidLoad(){
         self.amountText.delegate = self
-        loadTotalData()
+//        loadTotalData()
         //dismiss keyboard if you tap on background
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -53,21 +54,21 @@ class ChipInViewController: UIViewController, UITextFieldDelegate{
     
     
     //========Firebase Load Data here ======
-    func loadTotalData(){
-//        let dataDescription = "01"
-        //+++++++FIREBASE TOTAL AMOUNT DATA ONCE+++++++
-        //https://firebase.google.com/docs/firestore/query-data/get-data
-        //title informaiton
-        self.titleButton.text = (roomData.room)
-        
-        //amount informaiton
-        let amountHere = roomData.amount
-        self.totalAmountValue.text = ("\(amountHere)")
-    
-        
-        self.amountCollectedValue.text = ("\(roomData.amountCollected)")
-
-    }
+//    func loadTotalData(){
+////        let dataDescription = "01"
+//        //+++++++FIREBASE TOTAL AMOUNT DATA ONCE+++++++
+//        //https://firebase.google.com/docs/firestore/query-data/get-data
+//        //title informaiton
+//        self.titleButton.text = (roomData.room)
+//
+//        //amount informaiton
+//        let amountHere = roomData.amount
+//        self.totalAmountValue.text = ("\(amountHere)")
+//
+//
+//        self.amountCollectedValue.text = ("\(roomData.amountCollected)")
+//
+//    }
     //========Firebase Load Data here ======
     
     //========save button tapped========
